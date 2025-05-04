@@ -8,12 +8,29 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @Namespace private var namespace
+    @State private var isFlipped = false
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            if isFlipped {
+                Rectangle()
+                    .matchedGeometryEffect(id: "shape", in: namespace)
+                    .frame(width: 100, height: 100)
+                    .foregroundColor(.blue)
+            } else {
+                Circle()
+                    .matchedGeometryEffect(id: "shape", in: namespace)
+                    .frame(maxWidth: .infinity, maxHeight: 400)
+                    .foregroundColor(.red)
+            }
+            
+            Button("Toggle") {
+                withAnimation {
+                    isFlipped.toggle()
+                }
+            }
         }
         .padding()
     }
